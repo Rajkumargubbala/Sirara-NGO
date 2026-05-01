@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-background: #FAF9F6;
+  --color-foreground: #1a1a1a;
+
+  --color-primary: #006400;
+  --color-primary-light: #008000;
+  --color-primary-dark: #004d00;
+
+  --color-secondary: #5D4037;
+  --color-secondary-light: #8d6e63;
+  --color-secondary-dark: #3e2723;
+
+  --color-accent: #D4AF37;
+  --color-accent-light: #f1c40f;
+  --color-accent-dark: #b8860b;
+}
+
+.dark {
+  --color-background: #121212;
+  --color-foreground: #f0f0f0;
+  --color-primary: #008000;
+  --color-primary-light: #00a000;
+  --color-primary-dark: #004d00;
+  --color-secondary: #2a2a2a;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-md font-medium transition-all hover:bg-primary-dark active:scale-95 shadow-md;
+  }
+  .btn-secondary {
+    @apply bg-secondary text-white px-6 py-3 rounded-md font-medium transition-all hover:bg-secondary-dark active:scale-95 shadow-md;
+  }
+  .btn-outline {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-md font-medium transition-all hover:bg-primary hover:text-white active:scale-95;
+  }
+  .section-padding {
+    @apply py-16 px-6 md:px-12 lg:px-24;
+  }
+  .card-premium {
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-all hover:shadow-xl;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
