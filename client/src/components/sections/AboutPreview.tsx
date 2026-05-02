@@ -85,7 +85,7 @@ export default function AboutPreview({
           </div>
 
           <div className="pt-4">
-            <Link href={ctaLink} className="btn-primary inline-block font-bold">
+            <Link href={ctaLink || "#"} className="btn-primary inline-block font-bold">
               {ctaText}
             </Link>
           </div>

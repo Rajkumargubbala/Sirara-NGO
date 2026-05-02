@@ -174,8 +174,8 @@ export default function Home() {
           </h2>
           <SanitizedHTML html={cta_banner.subtitle} className="text-xl text-gray-200 mb-10" />
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href={cta_banner.btn1Link} className="btn-primary !bg-white !text-primary !hover:bg-gray-100 px-10 text-xl font-bold">{cta_banner.btn1Text}</Link>
-            <Link href={cta_banner.btn2Link} className="btn-outline !border-white !text-white hover:!bg-white hover:!text-primary px-10 text-xl font-bold">{cta_banner.btn2Text}</Link>
+            <Link href={cta_banner.btn1Link || "#"} className="btn-primary !bg-white !text-primary !hover:bg-gray-100 px-10 text-xl font-bold">{cta_banner.btn1Text}</Link>
+            <Link href={cta_banner.btn2Link || "#"} className="btn-outline !border-white !text-white hover:!bg-white hover:!text-primary px-10 text-xl font-bold">{cta_banner.btn2Text}</Link>
           </div>
         </div>
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">

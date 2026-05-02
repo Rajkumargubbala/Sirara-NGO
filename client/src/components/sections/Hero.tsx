@@ -51,7 +51,7 @@ export default function Hero({ title, subtitle, ctaText, ctaLink, imageUrl }: He
           transition={{ duration: 0.5, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link href={ctaLink} className="btn-primary !bg-accent !text-secondary !hover:bg-accent-dark !border-none text-lg">
+          <Link href={ctaLink || "#"} className="btn-primary !bg-accent !text-secondary !hover:bg-accent-dark !border-none text-lg">
             {ctaText}
           </Link>
           <Link href="/about" className="btn-outline !text-white !border-white hover:!bg-white hover:!text-primary text-lg">

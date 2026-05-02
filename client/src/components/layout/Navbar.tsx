@@ -109,7 +109,7 @@ export default function Navbar() {
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <Link href={navbar.ctaLink} className="btn-primary py-2 px-6">
+            <Link href={navbar.ctaLink || "#"} className="btn-primary py-2 px-6">
               {navbar.ctaText}
             </Link>
           </div>
@@ -153,7 +153,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href={navbar.ctaLink}
+                href={navbar.ctaLink || "#"}
                 onClick={() => setIsOpen(false)}
                 className="btn-primary text-center mt-2"
               >
