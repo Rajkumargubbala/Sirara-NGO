@@ -36,10 +36,7 @@ export default function BlogListing() {
     }
   };
 
-  const header = content?.header || {
-    title: "Voices of Sitara",
-    subtitle: "Stories of change, community impact, and the journey of our mission."
-  };
+  const header = content?.header || {};
 
   // Helper to strip HTML for the preview
   const getPreviewText = (html: string) => {

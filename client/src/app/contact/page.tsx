@@ -30,19 +30,8 @@ export default function Contact() {
     fetchContent();
   }, []);
 
-  const header = content?.header || {
-    badge: "Contact Us",
-    title: "Get In Touch",
-    subtitle: "Have questions about our programs or want to support our mission? Reach out to us.",
-  };
-
-  const contact = content?.info || {
-    address: "123 NGO Street, Community Hub, City, Country",
-    phone: "+1 (234) 567-890",
-    whatsapp: "1234567890",
-    email: "contact@sitara.org",
-    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30591910525!2d-74.25986432970718!3d40.69714942211307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1675176543210!5m2!1sen!2sin"
-  };
+  const header = content?.header || {};
+  const contact = content?.info || {};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

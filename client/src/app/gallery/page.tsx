@@ -41,10 +41,7 @@ export default function Gallery() {
     }
   };
 
-  const header = content?.header || {
-    title: "Our Visual Journey",
-    subtitle: "Explore the moments and milestones that define our impact across communities."
-  };
+  const header = content?.header || {};
 
   const categories = ["All", ...(content?.categories?.items?.map((c: any) => c.name) || [])];
 

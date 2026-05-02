@@ -55,11 +55,7 @@ export default function Donate() {
     }
   };
 
-  const header = content?.header || {
-    title: "Your Contribution Changes Lives",
-    description: "Every donation, no matter the size, goes directly towards our mission of empowering communities. We ensure 100% transparency in our funding and project execution.",
-    quotation: "We believe that every person deserves the opportunity to thrive. Your support helps us provide the tools and resources needed to create lasting change."
-  };
+  const header = content?.header || {};
 
   return (
     <main className="min-h-screen pt-20">

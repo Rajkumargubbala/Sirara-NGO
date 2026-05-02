@@ -29,17 +29,10 @@ export default function TestimonialsPage() {
     fetchData();
   }, []);
 
-  const header = content?.header || {
-    title: "Voices of Impact",
-    subtitle: "Hear from the partners, volunteers, and communities that make our work possible.",
-    badge: "Testimonials"
-  };
+  const header = content?.header || {};
 
-  // Fallback items if API is empty
-  const displayItems = items.length > 0 ? items : [
-    { name: "Dr. Sarah Mitchell", role: "Community Partner", content: "Working with Sitara has been an eye-opening experience.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80", rating: 5 },
-    { name: "James Wilson", role: "Volunteer", content: "The transparency and structure at Sitara are what stand out.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80", rating: 5 }
-  ];
+  // Display only items from DB
+  const displayItems = items;
 
   return (
     <main className="min-h-screen pt-20">

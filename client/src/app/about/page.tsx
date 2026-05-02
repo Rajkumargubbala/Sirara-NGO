@@ -28,11 +28,7 @@ export default function About() {
     fetchContent();
   }, []);
 
-  const hero = content?.hero || {
-    title: "Dedicated to Uplifting Humanity",
-    subtitle: "At Sitara Association, we believe in the power of collective action to solve the world's most pressing challenges.",
-    imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80"
-  };
+  const hero = content?.hero || {};
 
   return (
     <main className="min-h-screen">

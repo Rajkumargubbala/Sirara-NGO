@@ -52,62 +52,13 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // Sections with fallbacks
-  const hero = content?.hero || {
-    title: "Transforming Lives Through Collective Compassion",
-    subtitle: "Sitara Association is a global community dedicated to sustainable empowerment.",
-    ctaText: "Start Your Impact",
-    ctaLink: "/donate",
-    imageUrl: "/images/hero-banner.png"
-  };
-
-  const impact_stats = {
-    title: content?.impact_stats?.title || "Our Growing Impact",
-    description: content?.impact_stats?.description || "Every number represents a life changed and a community strengthened.",
-    items: (content?.impact_stats?.items && content.impact_stats.items.length > 0)
-      ? content.impact_stats.items
-      : [
-        { label: "Lives Impacted", value: "50,000+", icon: "👥", description: "Across global communities" },
-        { label: "Volunteers", value: "1,200+", icon: "🤝", description: "Dedicated change-makers" },
-        { label: "Projects Completed", value: "150+", icon: "📊", description: "Sustainable initiatives" },
-        { label: "Communities Served", value: "25+", icon: "🏘️", description: "Local partnerships" },
-      ]
-  };
-
-  const about_preview = {
-    title: content?.about_preview?.title || "About Sitara",
-    subtitle: content?.about_preview?.subtitle || "A Legacy of Hope and Sustainable Change",
-    description: content?.about_preview?.description || "Sitara Association was born from a simple belief: that every individual deserves the opportunity to thrive.",
-    imageUrl: content?.about_preview?.imageUrl || "https://images.unsplash.com/photo-1509059852496-f3822ae057bf?auto=format&fit=crop&q=80",
-    points: content?.about_preview?.points || ["Transparency in every project", "Direct community involvement", "Sustainable long-term impact", "Global network of volunteers"],
-    statValue: content?.about_preview?.statValue || "15+",
-    statLabel: content?.about_preview?.statLabel || "Years of Dedicated Service",
-    ctaText: content?.about_preview?.ctaText || "Discover Our Journey",
-    ctaLink: content?.about_preview?.ctaLink || "/about"
-  };
-
-  const initiatives_preview = {
-    title: content?.initiatives_preview?.title || "Our Key Initiatives",
-    description: content?.initiatives_preview?.description || "Focused programs designed to address the most pressing needs of our society."
-  };
-
-  // Show the first 3 initiatives from the list
-  const featured_items = allInitiatives.length > 0
-    ? allInitiatives.slice(0, 3)
-    : [
-      { title: "Education for All", description: "Providing quality education and learning materials.", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80" },
-      { title: "Healthcare Outreach", description: "Mobile clinics and health awareness programs.", image: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80" },
-      { title: "Women Empowerment", description: "Skill development and micro-finance support.", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80" },
-    ];
-
-  const cta_banner = {
-    title: content?.cta_banner?.title || "Be the change you wish to see in the world.",
-    subtitle: content?.cta_banner?.subtitle || content?.cta_banner?.description || content?.cta_banner?.content || "Your support can provide clean water, quality education, and medical care to those who need it most.",
-    btn1Text: content?.cta_banner?.btn1Text || content?.cta_banner?.ctaText || "Donate Now",
-    btn1Link: content?.cta_banner?.btn1Link || content?.cta_banner?.ctaLink || "/donate",
-    btn2Text: content?.cta_banner?.btn2Text || "Join as Volunteer",
-    btn2Link: content?.cta_banner?.btn2Link || "/volunteer"
-  };
+  // Sections (Strictly CMS Data)
+  const hero = content?.hero || {};
+  const impact_stats = content?.impact_stats || {};
+  const about_preview = content?.about_preview || {};
+  const initiatives_preview = content?.initiatives_preview || {};
+  const featured_items = allInitiatives.length > 0 ? allInitiatives.slice(0, 3) : [];
+  const cta_banner = content?.cta_banner || {};
 
   return (
     <main className="min-h-screen">

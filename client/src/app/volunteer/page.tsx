@@ -12,12 +12,7 @@ import SanitizedHTML from "@/components/ui/SanitizedHTML";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
 
 export default function Volunteer() {
-  const [content, setContent] = useState<any>({
-    header: {
-      title: "Join Our Mission",
-      subtitle: "Your time and skills can change lives. Become a part of the Sitara family today."
-    }
-  });
+  const [content, setContent] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,28 +29,9 @@ export default function Volunteer() {
     fetchContent();
   }, []);
 
-  const header = content.header;
-
-  const why_join = content?.why_join || {
-    title: "Why Volunteer with Sitara?",
-    description: "Volunteering is at the core of our organization. Whether you're a professional looking to donate your skills or a student eager to learn, there's a place for you here.",
-    benefits: [
-      { title: "Skill Development", desc: "Gain practical experience in community development and NGO management." },
-      { title: "Global Network", desc: "Connect with like-minded individuals from around the world." },
-      { title: "Local Impact", desc: "See the direct results of your efforts in the communities we serve." },
-      { title: "Certificates", desc: "Receive official recognition for your contribution and impact." },
-    ]
-  };
-
-  const opportunities = content?.opportunities || {
-    title: "Current Opportunities",
-    items: [
-      { title: "Community Health Educator", tag: "Urgent" },
-      { title: "Digital Literacy Tutor", tag: "Remote" },
-      { title: "Content Creator & Storyteller", tag: "Flexible" },
-      { title: "Event Coordinator", tag: "Part-time" },
-    ]
-  };
+  const header = content?.header || {};
+  const why_join = content?.why_join || {};
+  const opportunities = content?.opportunities || {};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

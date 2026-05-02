@@ -59,10 +59,7 @@ export default function Initiatives() {
     );
   }
 
-  const header = content?.header || {
-    title: "Our Strategic Initiatives",
-    subtitle: "Focused programs designed to address the most pressing needs of our society.",
-  };
+  const header = content?.header || {};
 
   const items = content?.initiatives_list?.items || [];
 
