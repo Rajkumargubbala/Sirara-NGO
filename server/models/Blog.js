@@ -6,7 +6,7 @@ const blogSchema = mongoose.Schema(
     slug: { type: String, required: true, unique: true },
     content: { type: String, required: true },
     excerpt: String,
-    author: { type: String, default: 'SITATRA' },
+    author: { type: String, default: 'Sitara' },
     image: String,
     category: String,
     tags: [String],

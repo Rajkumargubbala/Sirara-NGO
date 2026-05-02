@@ -6,23 +6,20 @@ import Footer from "@/components/layout/Footer";
 import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { ENV } from "@/config/env";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
+const API_URL = ENV.API_URL;
 
 export default function Contact() {
-  const [content, setContent] = useState<any>({
-    header: {
-      title: "Get in Touch",
-      subtitle: "We'd love to hear from you. Reach out with any questions or collaboration ideas."
-    }
-  });
+  const [content, setContent] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/content/contact`);
+        const timestamp = new Date().getTime();
+        const { data } = await axios.get(`${API_URL}/content/contact?t=${timestamp}`);
         if (data.sections) {
           setContent(data.sections);
         }
@@ -39,11 +36,11 @@ export default function Contact() {
     subtitle: "Have questions about our programs or want to support our mission? Reach out to us.",
   };
 
-  const info = content?.info || {
+  const contact = content?.info || {
     address: "123 NGO Street, Community Hub, City, Country",
     phone: "+1 (234) 567-890",
-    email: "contact@sitatra.org",
     whatsapp: "1234567890",
+    email: "contact@sitara.org",
     mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30591910525!2d-74.25986432970718!3d40.69714942211307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1675176543210!5m2!1sen!2sin"
   };
 
@@ -60,7 +57,10 @@ export default function Contact() {
       (e.target as HTMLFormElement).reset();
     } catch (error: any) {
       console.error("Contact submission error:", error);
-      toast.error(error.response?.data?.message || "Failed to send message. Please try again.");
+      const errorMessage = error.response?.data?.errors 
+        ? error.response.data.errors.map((e: any) => e.message).join(", ")
+        : error.response?.data?.message || "Failed to send message";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -113,8 +113,8 @@ export default function Contact() {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Subject</label>
-              <input required name="subject" type="text" className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary outline-none transition-all" placeholder="How can we help?" />
+              <label className="text-sm font-medium text-gray-700">Phone Number</label>
+              <input required name="phone" type="tel" className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary outline-none transition-all" placeholder="+1 (234) 567-890" />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Message</label>
@@ -145,9 +145,10 @@ export default function Contact() {
             <h2 className="text-3xl font-serif font-bold text-secondary mb-8">Contact Information</h2>
             <div className="space-y-8">
               {[
-                { icon: MapPin, title: "Our Location", detail: info.address },
-                { icon: Phone, title: "Phone Number", detail: info.phone },
-                { icon: Mail, title: "Email Address", detail: info.email },
+                { icon: MapPin, title: "Our Location", detail: contact.address },
+                { icon: Phone, title: "Phone Number", detail: contact.phone },
+                { icon: MessageCircle, title: "WhatsApp", detail: contact.whatsapp },
+                { icon: Mail, title: "Email Address", detail: contact.email },
               ].map((item) => (
                 <div key={item.title} className="flex gap-6">
                   <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
@@ -169,7 +170,7 @@ export default function Contact() {
             </h3>
             <p className="text-gray-700 mb-6">Need an immediate response? Our team is available on WhatsApp for quick inquiries.</p>
             <a
-              href={`https://wa.me/${info.whatsapp}`}
+              href={`https://wa.me/${contact.whatsapp}`}
               target="_blank"
               className="inline-flex items-center gap-2 font-bold text-primary hover:underline"
             >
@@ -177,15 +178,33 @@ export default function Contact() {
             </a>
           </div>
 
-          {/* Map Embed Placeholder */}
-          <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden grayscale">
-            <iframe
-              src={info.mapUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-            ></iframe>
+          {/* Map Embed Container */}
+          <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative group">
+            {contact.mapUrl && contact.mapUrl.includes('embed') ? (
+              <iframe
+                src={contact.mapUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                title="Google Maps"
+              ></iframe>
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 p-8 text-center space-y-4">
+                <MapPin className="text-primary opacity-20" size={48} />
+                <div>
+                  <p className="text-gray-500 text-sm mb-4">Click below to view our location on the official Google Maps page.</p>
+                  <a 
+                    href={contact.mapUrl || "#"} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex items-center gap-2 text-sm px-6 py-2"
+                  >
+                    View on Google Maps
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       </section>

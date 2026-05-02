@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { User, Mail, Phone, MapPin, Briefcase, Heart, Send } from "lucide-react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import SanitizedHTML from "@/components/ui/SanitizedHTML";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
 
@@ -14,7 +15,7 @@ export default function Volunteer() {
   const [content, setContent] = useState<any>({
     header: {
       title: "Join Our Mission",
-      subtitle: "Your time and skills can change lives. Become a part of the SITATRA family today."
+      subtitle: "Your time and skills can change lives. Become a part of the Sitara family today."
     }
   });
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,7 @@ export default function Volunteer() {
   const header = content.header;
 
   const why_join = content?.why_join || {
-    title: "Why Volunteer with SITATRA?",
+    title: "Why Volunteer with Sitara?",
     description: "Volunteering is at the core of our organization. Whether you're a professional looking to donate your skills or a student eager to learn, there's a place for you here.",
     benefits: [
       { title: "Skill Development", desc: "Gain practical experience in community development and NGO management." },
@@ -75,7 +76,10 @@ export default function Volunteer() {
       (e.target as HTMLFormElement).reset();
     } catch (error: any) {
       console.error("Submission error:", error);
-      toast.error(error.response?.data?.message || "Failed to submit application.");
+      const errorMessage = error.response?.data?.errors 
+        ? error.response.data.errors.map((e: any) => e.message).join(", ")
+        : error.response?.data?.message || "Failed to submit application";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -114,14 +118,14 @@ export default function Volunteer() {
         <div className="space-y-12">
           <div>
             <h2 className="text-3xl font-serif font-bold text-secondary mb-6">{why_join.title}</h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              {why_join.description}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="text-gray-600 text-lg leading-relaxed mb-8 prose max-w-none">
+              <SanitizedHTML html={why_join.description} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {(why_join.benefits || []).map((item: any) => (
-                <div key={item.title} className="p-6 bg-white rounded-xl shadow-sm border border-gray-50 hover:border-primary/20 transition-all">
-                  <h4 className="font-bold text-primary mb-2">{item.title}</h4>
-                  <p className="text-sm text-gray-500">{item.desc}</p>
+                <div key={item.title} className="p-6 bg-white rounded-xl shadow-sm border border-gray-50 hover:border-primary/20 transition-all overflow-hidden break-words">
+                  <h4 className="font-bold text-primary mb-2 break-words leading-tight">{item.title}</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const blogPostSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  slug: { type: String, required: true, unique: true },
-  excerpt: { type: String, required: true },
+  slug: { type: String, unique: true },
+  excerpt: { type: String },
   content: { type: String, required: true },
-  author: { type: String, default: "SITATRA Association" },
+  author: { type: String, default: "Sitara Association" },
   category: { type: String, default: "News" },
   featuredImage: { type: String },
   publishedAt: { type: Date, default: Date.now },

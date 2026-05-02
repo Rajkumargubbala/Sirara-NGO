@@ -8,7 +8,7 @@ const seedAdmin = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     
-    const adminExists = await Admin.findOne({ email: 'admin@sitatra.org' });
+    const adminExists = await Admin.findOne({ email: 'admin@sitara.org' });
     
     if (adminExists) {
       adminExists.password = 'admin123';
@@ -16,11 +16,11 @@ const seedAdmin = async () => {
       console.log('Admin password reset to admin123');
     } else {
       await Admin.create({
-        name: 'SITATRA Admin',
-        email: 'admin@sitatra.org',
+        name: 'Sitara Admin',
+        email: 'admin@sitara.org',
         password: 'admin123'
       });
-      console.log('Admin created: admin@sitatra.org / admin123');
+      console.log('Admin created: admin@sitara.org / admin123');
     }
     
     process.exit();

@@ -30,7 +30,7 @@ export default function About() {
 
   const hero = content?.hero || {
     title: "Dedicated to Uplifting Humanity",
-    subtitle: "At SITATRA Association, we believe in the power of collective action to solve the world's most pressing challenges.",
+    subtitle: "At Sitara Association, we believe in the power of collective action to solve the world's most pressing challenges.",
     imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80"
   };
 
@@ -64,7 +64,7 @@ export default function About() {
             className="lg:w-1/2 relative"
           >
             <div className="rounded-3xl overflow-hidden shadow-2xl">
-              <img src={hero.imageUrl} alt="About SITATRA" className="w-full aspect-video object-cover" />
+              <img src={hero.imageUrl} alt="About Sitara" className="w-full aspect-video object-cover" />
             </div>
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent rounded-2xl -z-10" />
           </motion.div>
@@ -75,20 +75,44 @@ export default function About() {
       <section className="section-padding bg-background">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
           {[
-            { title: "Our Mission", icon: Target, content: content?.mission?.content || "To empower marginalized communities through education, healthcare, and sustainable livelihood programs." },
-            { title: "Our Vision", icon: Eye, content: content?.vision?.content || "A world where every individual has the opportunity to live a life of dignity, health, and prosperity." },
-            { title: "Our Values", icon: Heart, content: content?.values?.content || "Compassion, Transparency, Innovation, and Inclusivity are the pillars of everything we do." },
+            { 
+              title: content?.mission?.title || "Our Mission", 
+              icon: content?.mission?.icon, 
+              defaultIcon: <Target size={32} />,
+              content: content?.mission?.description || content?.mission?.content || "To empower marginalized communities through education, healthcare, and sustainable livelihood programs." 
+            },
+            { 
+              title: content?.vision?.title || "Our Vision", 
+              icon: content?.vision?.icon, 
+              defaultIcon: <Eye size={32} />,
+              content: content?.vision?.description || content?.vision?.content || "A world where every individual has the opportunity to live a life of dignity, health, and prosperity." 
+            },
+            { 
+              title: content?.values?.title || "Our Values", 
+              icon: content?.values?.icon, 
+              defaultIcon: <Heart size={32} />,
+              content: content?.values?.description || content?.values?.content || "Compassion, Transparency, Innovation, and Inclusivity are the pillars of everything we do." 
+            },
           ].map((item, i) => (
             <motion.div 
               key={i}
               whileHover={{ y: -10 }}
-              className="p-10 bg-white rounded-3xl shadow-sm border border-gray-100 text-center space-y-6"
+              className="p-10 bg-white rounded-3xl shadow-sm border border-gray-100 text-center space-y-6 flex flex-col h-full"
             >
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto">
-                <item.icon size={32} />
+              <div className="shrink-0 w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto overflow-hidden">
+                {item.icon && item.icon.startsWith('/') || item.icon?.startsWith('http') ? (
+                  <img src={item.icon} alt={item.title} className="w-10 h-10 object-contain" />
+                ) : (
+                  item.defaultIcon
+                )}
               </div>
-              <h3 className="text-2xl font-serif font-bold text-secondary">{item.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{item.content}</p>
+              <div className="flex-1 space-y-4">
+                <h3 className="text-2xl font-serif font-bold text-secondary">{item.title}</h3>
+                <SanitizedHTML 
+                  html={item.content} 
+                  className="text-gray-600 leading-relaxed break-words text-sm md:text-base prose-p:my-0" 
+                />
+              </div>
             </motion.div>
           ))}
         </div>
@@ -97,10 +121,10 @@ export default function About() {
       {/* Story Section */}
       <section className="section-padding">
         <div className="max-w-4xl mx-auto space-y-12">
-          <h2 className="text-4xl font-serif font-bold text-secondary text-center italic">Our Journey</h2>
+          <h2 className="text-4xl font-serif font-bold text-secondary text-center italic">{content?.story?.title || "Our Journey"}</h2>
           <SanitizedHTML 
             className="prose prose-lg max-w-none prose-serif prose-headings:text-secondary prose-p:text-gray-600"
-            html={content?.story?.content || "<p>Founded in 2010, SITATRA began as a small group of volunteers...</p>"}
+            html={content?.story?.content || "<p>Founded in 2010, Sitara began as a small group of volunteers...</p>"}
           />
         </div>
       </section>

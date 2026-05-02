@@ -41,11 +41,12 @@ export default function Navbar() {
   }, []);
 
   const navbar = headerContent?.navbar || {
-    logoText: "SITATRA",
+    logoImage: "/images/logo.png",
     links: [
       { name: "Home", href: "/" },
       { name: "About", href: "/about" },
       { name: "Initiatives", href: "/initiatives" },
+      { name: "Testimonials", href: "/testimonials" },
       { name: "Reports", href: "/reports" },
       { name: "Blog", href: "/blog" },
       { name: "Gallery", href: "/gallery" },
@@ -62,18 +63,30 @@ export default function Navbar() {
         isScrolled || isDark ? "bg-background/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between relative h-12">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
-            <Heart className="text-white w-6 h-6 fill-current" />
-          </div>
-          <span className={cn(
-            "text-2xl font-serif font-bold transition-colors text-primary"
-          )}>
-            {navbar.logoText}
-          </span>
-        </Link>
+        <div className="flex items-center h-full">
+          <Link href="/" className="flex items-center gap-2 group absolute left-0 top-1/2 -translate-y-1/2">
+            {navbar.logoImage ? (
+              <img
+                src={navbar.logoImage}
+                alt="Logo"
+                className="h-25 w-auto object-contain transition-transform group-hover:scale-105"
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
+                  <Heart className="text-white w-6 h-6 fill-current" />
+                </div>
+                <span className={cn(
+                  "text-2xl font-serif font-bold transition-colors text-primary"
+                )}>
+                  {navbar.logoText || "Sitara"}
+                </span>
+              </>
+            )}
+          </Link>
+        </div>
 
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-8">

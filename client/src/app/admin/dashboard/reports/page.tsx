@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FileText, Plus, Trash2, Upload, Calendar, Tag } from "lucide-react";
+import { FileText, Plus, Trash2, Upload, Calendar, Tag, Download } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ENV } from "@/config/env";
@@ -49,9 +49,8 @@ export default function ManageReports() {
       // 1. Upload to Cloudinary via our media endpoint
       const token = localStorage.getItem("token");
       const { data: uploadData } = await axios.post(`${API_URL}/media/upload`, uploadFormData, {
-        headers: { 
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "multipart/form-data" 
+        headers: {
+          "Authorization": `Bearer ${token}`
         }
       });
 
@@ -68,8 +67,9 @@ export default function ManageReports() {
       setFormData({ title: "", type: "Annual", year: new Date().getFullYear().toString() });
       setFile(null);
       fetchReports();
-    } catch (error) {
-      toast.error("Failed to upload report");
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast.error(error.response?.data?.message || "Failed to upload report");
     } finally {
       setUploading(false);
     }
@@ -77,7 +77,7 @@ export default function ManageReports() {
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this report?")) return;
-    
+
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`${API_URL}/reports/${id}`, {
@@ -106,19 +106,19 @@ export default function ManageReports() {
         <form onSubmit={handleUpload} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Report Title</label>
-            <input 
+            <input
               required
               value={formData.title}
-              onChange={(e) => setFormData({...formData, title: e.target.value})}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all" 
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all"
               placeholder="Annual Report 2024"
             />
           </div>
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Type</label>
-            <select 
+            <select
               value={formData.type}
-              onChange={(e) => setFormData({...formData, type: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
               className="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all"
             >
               <option value="Annual">Annual Report</option>
@@ -127,26 +127,26 @@ export default function ManageReports() {
           </div>
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Year</label>
-            <input 
+            <input
               required
               type="number"
               value={formData.year}
-              onChange={(e) => setFormData({...formData, year: e.target.value})}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all" 
+              onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all"
             />
           </div>
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">File (PDF/Image)</label>
-            <input 
+            <input
               required
               type="file"
-              accept=".pdf,image/*"
+              accept=".pdf,.docx,.xlsx,.csv,image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
               className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
             />
           </div>
           <div className="md:col-span-4">
-            <button 
+            <button
               disabled={uploading}
               className="btn-primary px-10 py-4 rounded-xl flex items-center gap-2 shadow-lg shadow-primary/20"
             >
@@ -193,12 +193,38 @@ export default function ManageReports() {
                   <td className="px-8 py-6 text-gray-500 font-medium">{report.year}</td>
                   <td className="px-8 py-6 text-gray-400 text-sm">{new Date(report.createdAt).toLocaleDateString()}</td>
                   <td className="px-8 py-6 text-right">
-                    <button 
-                      onClick={() => handleDelete(report._id)}
-                      className="p-2 text-gray-300 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 size={20} />
-                    </button>
+                    <div className="flex justify-end gap-2">
+                      <button 
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(report.fileUrl);
+                            const blob = await response.blob();
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = `${report.title.replace(/\s+/g, '_')}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+                          } catch (error) {
+                            toast.error("Download failed");
+                            window.open(report.fileUrl, '_blank');
+                          }
+                        }}
+                        className="p-2 text-gray-300 hover:text-primary transition-colors"
+                        title="Download Report"
+                      >
+                        <Download size={20} />
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(report._id)}
+                        className="p-2 text-gray-300 hover:text-red-500 transition-colors"
+                        title="Delete Report"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

@@ -62,3 +62,59 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+/* Rich Text Spacing & Readability Improvements */
+.prose, .ql-editor {
+  line-height: 1.8 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Force spacing between ANY direct children elements */
+.prose > * + *, .ql-editor > * + * {
+  margin-top: 2rem !important;
+}
+
+/* Ensure specific tags have clear margins */
+.prose p, .ql-editor p {
+  margin-bottom: 1.5rem !important;
+}
+
+.prose h1, .prose h2, .prose h3, 
+.ql-editor h1, .ql-editor h2, .ql-editor h3 {
+  margin-top: 3rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.prose ul, .prose ol, 
+.ql-editor ul, .ql-editor ol {
+  margin-left: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.prose li, .ql-editor li {
+  margin-bottom: 0.75rem !important;
+}
+
+/* Ensure everything stays within the screen */
+.prose {
+  max-width: 100% !important;
+  overflow-x: hidden;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.prose * {
+  max-width: 100% !important;
+}
+
+.prose img, .prose video, .prose iframe {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 1rem;
+}
+
+/* Quill specific padding */
+.ql-editor {
+  padding: 2rem !important;
+  font-size: 1.1rem !important;
+}

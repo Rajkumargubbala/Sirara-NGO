@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Heart, Globe, Share2, Users, Mail, Phone, MapPin } from "lucide-react";
+import { Heart, Mail, MapPin, Phone, MessageCircle } from "lucide-react";
+import { FacebookIcon, InstagramIcon, TwitterIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ENV } from "@/config/env";
@@ -15,7 +16,8 @@ export default function Footer() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/content/footer`);
+        const timestamp = new Date().getTime();
+        const { data } = await axios.get(`${API_URL}/content/footer?t=${timestamp}`);
         if (data.sections) setContent(data.sections);
       } catch (error) {
         console.error("Error fetching footer:", error);
@@ -25,7 +27,15 @@ export default function Footer() {
   }, []);
 
   const about = content?.about || {
-    text: "SITATRA Association is dedicated to uplifting communities through sustainable development, education, and healthcare initiatives. Together, we create lasting change."
+    logoImage: "/images/logo.png"
+  };
+  
+  const socialLinks = content?.social_links || {
+    facebook: "#",
+    instagram: "#",
+    twitter: "#",
+    whatsapp: "#",
+    email: "contact@sitara.org"
   };
 
   const quickLinks = content?.quick_links?.items || [
@@ -39,11 +49,11 @@ export default function Footer() {
   const contact = content?.contact_info || {
     address: "123 NGO Street, Community Hub, City, Country",
     phone: "+1 (234) 567-890",
-    email: "contact@sitatra.org"
+    email: "contact@sitara.org"
   };
 
   const bottom = content?.bottom || {
-    copyright: "© 2026 SITATRA Association. All Rights Reserved."
+    copyright: "© 2026 Sitara Association. All Rights Reserved."
   };
 
   const handleNewsletter = async (e: React.FormEvent) => {
@@ -65,20 +75,28 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         {/* About */}
         <div className="space-y-6">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-              <Heart className="text-secondary w-6 h-6 fill-current" />
-            </div>
-            <span className="text-2xl font-serif font-bold">SITATRA</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            {about.logoImage ? (
+              <img
+                src={about.logoImage}
+                alt="Logo"
+                className="h-28 w-auto object-contain transition-transform group-hover:scale-105"
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
+                  <Heart className="text-secondary w-6 h-6 fill-current" />
+                </div>
+                <span className="text-2xl font-serif font-bold group-hover:text-accent transition-colors">Sitara</span>
+              </>
+            )}
           </Link>
-          <p className="text-gray-300 text-sm leading-relaxed">
-            {about.text}
-          </p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-accent transition-colors"><Globe size={20} /></a>
-            <a href="#" className="hover:text-accent transition-colors"><Share2 size={20} /></a>
-            <a href="#" className="hover:text-accent transition-colors"><Users size={20} /></a>
-            <a href="#" className="hover:text-accent transition-colors"><Heart size={20} /></a>
+            <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><FacebookIcon size={20} /></a>
+            <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><InstagramIcon size={20} /></a>
+            <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><TwitterIcon size={20} /></a>
+            <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><WhatsAppIcon size={20} /></a>
+            <a href={`mailto:${socialLinks.email}`} className="hover:text-accent transition-colors"><Mail size={20} /></a>
           </div>
         </div>
 
@@ -105,6 +123,10 @@ export default function Footer() {
             <li className="flex items-center gap-3">
               <Phone size={18} className="text-accent shrink-0" />
               <span>{contact.phone}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <MessageCircle size={18} className="text-accent shrink-0" />
+              <span>{contact.whatsapp || "WhatsApp"}</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-accent shrink-0" />

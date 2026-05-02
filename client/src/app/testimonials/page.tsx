@@ -37,18 +37,18 @@ export default function TestimonialsPage() {
 
   // Fallback items if API is empty
   const displayItems = items.length > 0 ? items : [
-    { name: "Dr. Sarah Mitchell", role: "Community Partner", content: "Working with SITATRA has been an eye-opening experience.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80", rating: 5 },
-    { name: "James Wilson", role: "Volunteer", content: "The transparency and structure at SITATRA are what stand out.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80", rating: 5 }
+    { name: "Dr. Sarah Mitchell", role: "Community Partner", content: "Working with Sitara has been an eye-opening experience.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80", rating: 5 },
+    { name: "James Wilson", role: "Volunteer", content: "The transparency and structure at Sitara are what stand out.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80", rating: 5 }
   ];
 
   return (
     <main className="min-h-screen pt-20">
       <Navbar />
-      
+
       <section className="section-padding bg-background overflow-hidden relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">{header.badge}</span>
+            {/* <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">{header.badge}</span> */}
             <h1 className="text-4xl md:text-6xl font-serif font-bold text-secondary mb-6">{header.title}</h1>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">{header.subtitle}</p>
           </div>
@@ -66,7 +66,7 @@ export default function TestimonialsPage() {
                 <div className="absolute -top-5 left-10 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg">
                   <Quote size={20} fill="currentColor" />
                 </div>
-                
+
                 <div className="flex gap-1 mb-6">
                   {[...Array(t.rating)].map((_, i) => (
                     <Star key={i} size={16} className="text-accent fill-accent" />
@@ -74,12 +74,12 @@ export default function TestimonialsPage() {
                 </div>
 
                 <p className="text-gray-600 italic mb-8 leading-relaxed">"{t.content || t.message}"</p>
-                
+
                 <div className="flex items-center gap-4">
-                  <img 
-                    src={t.image} 
-                    alt={t.name} 
-                    className="w-14 h-14 rounded-full object-cover border-2 border-primary/20" 
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
                   />
                   <div>
                     <h4 className="font-bold text-secondary">{t.name}</h4>

@@ -10,7 +10,7 @@ const siteSettingsSchema = mongoose.Schema(
   {
     logo: String,
     favicon: String,
-    siteName: { type: String, default: 'SITATRA Association' },
+    siteName: { type: String, default: 'Sitara Association' },
     contactInfo: {
       address: String,
       phone: String,

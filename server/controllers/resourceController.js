@@ -1,3 +1,4 @@
+const Gallery = require('../models/Gallery');
 const Testimonial = require('../models/Testimonial');
 const TeamMember = require('../models/TeamMember');
 
@@ -46,4 +47,8 @@ module.exports = {
   createTeamMember: createResource(TeamMember),
   updateTeamMember: updateResource(TeamMember),
   deleteTeamMember: deleteResource(TeamMember),
+  getGallery: getResources(Gallery),
+  createGallery: createResource(Gallery),
+  updateGallery: updateResource(Gallery),
+  deleteGallery: deleteResource(Gallery),
 };

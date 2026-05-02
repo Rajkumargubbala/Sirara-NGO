@@ -22,9 +22,9 @@ export default function Terms() {
         <h2>1. Acceptance of Terms</h2>
         <p>By accessing and using this website, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our site.</p>
         <h2>2. Donations</h2>
-        <p>All donations made through our website are final. SITATRA Association is a registered non-profit organization.</p>
+        <p>All donations made through our website are final. Sitara Association is a registered non-profit organization.</p>
         <h2>3. Intellectual Property</h2>
-        <p>The content, logos, and images on this website are the property of SITATRA Association.</p>
+        <p>The content, logos, and images on this website are the property of Sitara Association.</p>
       `
     }
   });

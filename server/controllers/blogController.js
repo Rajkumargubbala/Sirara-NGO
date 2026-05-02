@@ -11,7 +11,19 @@ const getPosts = async (req, res) => {
 
 const getPostBySlug = async (req, res) => {
   try {
-    const post = await BlogPost.findOne({ slug: req.params.slug });
+    const { slug } = req.params;
+    let post;
+    
+    // Check if it's a valid MongoDB ID first
+    if (slug.match(/^[0-9a-fA-F]{24}$/)) {
+      post = await BlogPost.findById(slug);
+    }
+    
+    // If not found by ID, try finding by slug
+    if (!post) {
+      post = await BlogPost.findOne({ slug });
+    }
+
     if (post) res.json(post);
     else res.status(404).json({ message: 'Post not found' });
   } catch (error) {

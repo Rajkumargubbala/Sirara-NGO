@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
     main_content: {
       content: `
         <h2>1. Introduction</h2>
-        <p>At SITATRA Association, we are committed to protecting your privacy.</p>
+        <p>At Sitara Association, we are committed to protecting your privacy.</p>
         <h2>2. Information We Collect</h2>
         <p>We may collect personal information such as your name, email address, and phone number.</p>
         <h2>3. How We Use Your Information</h2>

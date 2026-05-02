@@ -115,22 +115,29 @@ export default function Reports() {
                   </h3>
                   <p className="text-sm font-bold text-primary mb-6">{report.type} Report</p>
                   
-                  <div className="flex gap-4">
-                    <a 
-                      href={report.fileUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-secondary text-white font-bold hover:bg-secondary-dark transition-all"
+                  <div className="mt-auto pt-6">
+                    <button 
+                      onClick={async () => {
+                        try {
+                          const response = await fetch(report.fileUrl);
+                          const blob = await response.blob();
+                          const url = window.URL.createObjectURL(blob);
+                          const link = document.createElement('a');
+                          link.href = url;
+                          link.download = `${report.title.replace(/\s+/g, '_')}.pdf`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          window.URL.revokeObjectURL(url);
+                        } catch (error) {
+                          console.error("Download failed:", error);
+                          window.open(report.fileUrl, '_blank');
+                        }
+                      }}
+                      className="w-full flex items-center justify-center gap-3 py-4 rounded-xl bg-primary text-white font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
                     >
-                      <Eye size={18} /> View
-                    </a>
-                    <a 
-                      href={report.fileUrl} 
-                      download
-                      className="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-gray-100 text-gray-400 hover:border-primary hover:text-primary transition-all"
-                    >
-                      <Download size={20} />
-                    </a>
+                      <Download size={20} /> Download Report
+                    </button>
                   </div>
                 </motion.div>
               ))}

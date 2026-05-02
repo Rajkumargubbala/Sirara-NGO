@@ -111,7 +111,7 @@ export default function TestimonialManager() {
             <div className="flex gap-1 text-accent">
               {[...Array(item.rating)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
             </div>
-            
+
             <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <button onClick={() => openModal(item)} className="p-2 bg-white shadow-md text-primary rounded-lg hover:bg-primary hover:text-white transition-all">
                 <Edit2 size={16} />
@@ -135,7 +135,7 @@ export default function TestimonialManager() {
                 <X size={24} />
               </button>
             </div>
-            
+
             <form onSubmit={handleSave} className="p-8 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">

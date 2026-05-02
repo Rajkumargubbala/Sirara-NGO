@@ -12,7 +12,12 @@ const getPageContent = async (req, res) => {
       res.status(404).json({ message: 'Page content not found' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(`Error fetching content for ${req.params.slug}:`, error);
+    res.status(500).json({ 
+      message: 'Internal Server Error', 
+      error: error.message,
+      stack: error.stack 
+    });
   }
 };
 
@@ -27,8 +32,13 @@ const updatePageContent = async (req, res) => {
     let content = await PageContent.findOne({ page });
 
     if (content) {
-      content.sections = sections;
-      content.meta = meta;
+      if (sections) {
+        content.set('sections', sections);
+        content.markModified('sections');
+      }
+      if (meta) {
+        content.meta = meta;
+      }
       await content.save();
     } else {
       content = await PageContent.create({
@@ -40,6 +50,7 @@ const updatePageContent = async (req, res) => {
 
     res.json(content);
   } catch (error) {
+    console.error('Error updating content:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -63,6 +74,7 @@ const patchPageContent = async (req, res) => {
       res.status(404).json({ message: 'Page content not found' });
     }
   } catch (error) {
+    console.error('Error patching content:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -79,6 +91,7 @@ const deletePageContent = async (req, res) => {
       res.status(404).json({ message: 'Page content not found' });
     }
   } catch (error) {
+    console.error('Error deleting content:', error);
     res.status(500).json({ message: error.message });
   }
 };

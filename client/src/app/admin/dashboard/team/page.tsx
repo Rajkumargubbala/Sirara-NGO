@@ -57,7 +57,7 @@ export default function TeamManager() {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`${API_URL}/resources/team/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       toast.success("Deleted successfully");
       fetchMembers();
@@ -77,7 +77,8 @@ export default function TeamManager() {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.post(`${API_URL}/media/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` }
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true
       });
       setEditingMember({ ...editingMember, image: data.url });
       toast.success("Image uploaded!");
@@ -157,12 +158,19 @@ export default function TeamManager() {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-400 uppercase">Profile Picture</label>
-                <div className="flex gap-4">
-                  <input value={editingMember.image} onChange={(e) => setEditingMember({ ...editingMember, image: e.target.value })} className="flex-1 px-5 py-4 rounded-2xl bg-gray-50 border-none outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Image URL" />
-                  <input type="file" id="member-image" className="hidden" onChange={(e) => e.target.files?.[0] && handleImageUpload(e.target.files[0])} />
-                  <label htmlFor="member-image" className="cursor-pointer px-6 py-4 bg-accent text-secondary rounded-2xl hover:bg-accent-dark transition-all flex items-center gap-2 font-bold">
-                    <Plus size={20} /> Upload
-                  </label>
+                <div className="flex items-center gap-6">
+                  {editingMember.image && (
+                    <div className="w-20 h-20 rounded-2xl overflow-hidden border shadow-sm">
+                      <img src={editingMember.image} alt="Preview" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="flex-1 flex gap-4">
+                    <input value={editingMember.image} onChange={(e) => setEditingMember({ ...editingMember, image: e.target.value })} className="flex-1 px-5 py-4 rounded-2xl bg-gray-50 border-none outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Image URL" />
+                    <input type="file" id="member-image" className="hidden" onChange={(e) => e.target.files?.[0] && handleImageUpload(e.target.files[0])} />
+                    <label htmlFor="member-image" className="cursor-pointer px-6 py-4 bg-accent text-secondary rounded-2xl hover:bg-accent-dark transition-all flex items-center gap-2 font-bold">
+                      <Plus size={20} /> Upload
+                    </label>
+                  </div>
                 </div>
               </div>
 

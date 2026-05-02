@@ -15,18 +15,31 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(helmet()); 
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+})); 
+
+const allowedOrigins = [
+  'http://localhost:3000', 'http://127.0.0.1:3000',
+  'http://localhost:3001', 'http://127.0.0.1:3001',
+  'http://localhost:5173', 'http://127.0.0.1:5173',
+  'http://192.168.1.8:3000', 'http://192.168.1.8:3001'
+];
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL] 
-    : [
-        'http://localhost:3000', 'http://127.0.0.1:3000',
-        'http://localhost:3001', 'http://127.0.0.1:3001',
-        'http://localhost:5173', 'http://127.0.0.1:5173'
-      ],
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 })); 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
@@ -39,7 +52,7 @@ app.use('/api', limiter);
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('SITATRA API is running...');
+  res.send('Sitara API is running...');
 });
 
 app.use('/api/admin', require('./routes/adminRoutes'));

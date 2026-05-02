@@ -15,16 +15,20 @@ interface AboutPreviewProps {
   points?: string[];
   statValue?: string;
   statLabel?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
 export default function AboutPreview({
-  title = "About SITATRA",
+  title = "About Sitara",
   subtitle = "A Legacy of Hope and Sustainable Change",
-  description = "SITATRA Association was born from a simple belief: that every individual deserves the opportunity to thrive.",
+  description = "Sitara Association was born from a simple belief: that every individual deserves the opportunity to thrive.",
   imageUrl = "https://images.unsplash.com/photo-1509059852496-f3822ae057bf?auto=format&fit=crop&q=80",
   points = ["Transparency in every project", "Direct community involvement", "Sustainable long-term impact", "Global network of volunteers"],
   statValue = "15+",
-  statLabel = "Years of Dedicated Service"
+  statLabel = "Years of Dedicated Service",
+  ctaText = "Discover Our Journey",
+  ctaLink = "/about"
 }: AboutPreviewProps) {
   return (
     <section className="section-padding bg-white overflow-hidden">
@@ -81,8 +85,8 @@ export default function AboutPreview({
           </div>
 
           <div className="pt-4">
-            <Link href="/about" className="btn-primary inline-block font-bold">
-              Discover Our Journey
+            <Link href={ctaLink} className="btn-primary inline-block font-bold">
+              {ctaText}
             </Link>
           </div>
         </motion.div>

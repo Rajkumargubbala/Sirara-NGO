@@ -30,7 +30,7 @@ export default function AdminLogin() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("adminInfo", JSON.stringify(data));
       toast.success("Login successful!");
-      router.push("/admin/dashboard");
+      router.push("/admin/dashboard/donations");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Login failed");
     } finally {
@@ -56,7 +56,7 @@ export default function AdminLogin() {
             <Heart size={40} className="fill-white" />
           </div>
           <h1 className="text-3xl font-serif font-bold italic">Admin Access</h1>
-          <p className="text-white/70 mt-2">SITATRA Association CMS</p>
+          <p className="text-white/70 mt-2">Sitara Association CMS</p>
         </div>
 
         <div className="p-12">
@@ -71,7 +71,7 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-12 pr-4 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-primary outline-none transition-all" 
-                  placeholder="admin@sitatra.org" 
+                  placeholder="admin@sitara.org" 
                 />
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function AdminLogin() {
           </form>
 
           <p className="text-center text-gray-400 text-xs mt-10">
-            Protected by SITATRA Security Protocols. Unauthorized access is prohibited.
+            Protected by Sitara Security Protocols. Unauthorized access is prohibited.
           </p>
         </div>
       </motion.div>

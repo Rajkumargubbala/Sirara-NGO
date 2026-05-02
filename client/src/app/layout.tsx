@@ -24,16 +24,16 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const { data } = await axios.get(`${API_URL}/settings`);
     return {
-      title: data.globalSeo?.metaTitle || "SITATRA Association | Empowering Communities",
-      description: data.globalSeo?.metaDescription || "Official website of SITATRA Association.",
+      title: data.globalSeo?.metaTitle || "Sitara Association | Empowering Communities",
+      description: data.globalSeo?.metaDescription || "Official website of Sitara Association.",
       openGraph: {
         images: [data.globalSeo?.ogImage || "/images/hero-banner.png"],
       },
     };
   } catch (error) {
     return {
-      title: "SITATRA Association | Empowering Communities",
-      description: "Official website of SITATRA Association.",
+      title: "Sitara Association | Empowering Communities",
+      description: "Official website of Sitara Association.",
     };
   }
 }

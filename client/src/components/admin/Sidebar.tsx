@@ -10,7 +10,8 @@ import {
   Image as ImageIcon, 
   Settings, 
   LogOut,
-  ChevronRight
+  ChevronRight,
+  HandCoins
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import axios from "axios";
@@ -22,15 +23,14 @@ import { ENV } from "@/config/env";
 const API_URL = ENV.API_URL;
 
 const menuItems = [
-  { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Manage Pages", href: "/admin/dashboard/pages", icon: FileText },
   { name: "Blog Posts", href: "/admin/dashboard/blog", icon: FileText },
   { name: "Testimonials", href: "/admin/dashboard/testimonials", icon: MessageSquare },
   { name: "Team Members", href: "/admin/dashboard/team", icon: Users },
   { name: "Manage Reports", href: "/admin/dashboard/reports", icon: FileText },
   { name: "Submissions", href: "/admin/dashboard/submissions", icon: MessageSquare },
+  { name: "Donations", href: "/admin/dashboard/donations", icon: HandCoins },
   { name: "Media Library", href: "/admin/dashboard/media", icon: ImageIcon },
-  { name: "Settings", href: "/admin/dashboard/settings", icon: Settings },
 ];
 
 export default function AdminSidebar() {
@@ -56,7 +56,7 @@ export default function AdminSidebar() {
   return (
     <div className="w-64 h-screen bg-secondary text-white flex flex-col fixed left-0 top-0">
       <div className="p-6 border-b border-white/10">
-        <h2 className="text-xl font-serif font-bold text-accent">SITATRA Admin</h2>
+        <h2 className="text-xl font-serif font-bold text-accent">Sitara Admin</h2>
       </div>
       
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
