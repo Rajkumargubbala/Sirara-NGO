@@ -33,6 +33,14 @@ export default function Volunteer() {
   const why_join = content?.why_join || {};
   const opportunities = content?.opportunities || {};
 
+  if (Object.keys(content).length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     

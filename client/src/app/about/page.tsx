@@ -30,6 +30,14 @@ export default function About() {
 
   const hero = content?.hero || {};
 
+  if (!content) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen">
       <Navbar />

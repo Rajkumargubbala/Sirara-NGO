@@ -60,6 +60,14 @@ export default function Home() {
   const featured_items = allInitiatives.length > 0 ? allInitiatives.slice(0, 3) : [];
   const cta_banner = content?.cta_banner || {};
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen">
       <Navbar />
