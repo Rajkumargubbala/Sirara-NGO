@@ -72,7 +72,8 @@ const DEFAULT_TEMPLATES: Record<string, any> = {
     mission: { title: "Our Mission", icon: "/icons/mission.png", description: "To empower marginalized communities through education, healthcare, and sustainable livelihood programs." },
     vision: { title: "Our Vision", icon: "/icons/vision.png", description: "A world where every individual has the opportunity to live a life of dignity, health, and prosperity." },
     values: { title: "Our Values", icon: "/icons/values.png", description: "Compassion, Transparency, Innovation, and Inclusivity are the pillars of everything we do." },
-    story: { title: "Our Journey", content: "<p>Founded in 2010, Sitara began as a small group of volunteers...</p>" }
+    story: { title: "Our Journey", content: "<p>Founded in 2010, Sitara began as a small group of volunteers...</p>" },
+    ceo: { title: "Message from our Founder", name: "Dr. Jane Doe", role: "Founder & CEO", content: "<p>Welcome to Sitara...</p>", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80" }
   },
   initiatives: {
     header: { title: "Our Strategic Initiatives", subtitle: "Focused programs designed to address the most pressing needs of our society." },

@@ -156,7 +156,7 @@ export default function Home() {
                 return (
                   <div 
                     key={index}
-                    className="flex justify-center overflow-hidden rounded-2xl shadow-xl border border-gray-200 bg-white p-4 w-full h-[400px] overflow-y-auto"
+                    className="flex justify-center overflow-hidden rounded-2xl shadow-xl border border-gray-200 bg-white p-4 w-full h-[400px] overflow-y-auto scrollbar-hide"
                     dangerouslySetInnerHTML={{ __html: finalEmbed }}
                   />
                 );

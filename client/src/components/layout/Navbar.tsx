@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Heart, Moon, Sun } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useDarkMode } from "@/hooks/useDarkMode";
 import axios from "axios";
 
 import { ENV } from "@/config/env";
@@ -16,7 +15,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerContent, setHeaderContent] = useState<any>(null);
-  const { isDark, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +58,7 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-        isScrolled || isDark ? "bg-background/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent"
+        isScrolled ? "bg-background/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between relative h-12">
@@ -101,14 +99,7 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-200 dark:border-gray-800">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-secondary dark:text-accent"
-              title="Toggle Dark Mode"
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+          <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-200">
             <Link href={navbar.ctaLink || "#"} className="btn-primary py-2 px-6">
               {navbar.ctaText}
             </Link>
@@ -117,12 +108,6 @@ export default function Navbar() {
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 lg:hidden">
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-full text-secondary dark:text-accent"
-          >
-            {isDark ? <Sun size={24} /> : <Moon size={24} />}
-          </button>
           <button
             className="text-primary p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -139,7 +124,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-white dark:bg-gray-900 shadow-xl lg:hidden border-t border-gray-100 dark:border-gray-800 z-[100]"
+            className="absolute top-full left-0 right-0 bg-white shadow-xl lg:hidden border-t border-gray-100 z-[100]"
           >
             <div className="flex flex-col p-6 gap-4">
               {(navbar.links || []).map((link: any) => (
@@ -147,7 +132,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium hover:text-primary border-b border-gray-50 dark:border-gray-800 pb-2 transition-colors"
+                  className="text-lg font-medium hover:text-primary border-b border-gray-50 pb-2 transition-colors"
                 >
                   {link.name}
                 </Link>
